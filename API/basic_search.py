@@ -27,14 +27,26 @@ def search(query):
 
     hits= res["hits"]["hits"]
 
-    response="Not Found, Check Spelling"
-
+    
     if(len(hits)!=0):
-        response= hits[0]["_source"]   #This returns the actual MongoDb Document. 
+        doc= hits[0]["_source"]   #This returns the actual MongoDb Document. 
 
-    return response
+        doc= notes.find({"code": doc["code"]})
+
+        response= doc
+
+        return response     #Returning the document deom the notes collection after searching.
+    
+    else:
+        return []
 
 
 
-ans=search("Dratabase")
-print(ans)
+ans=search("Opearaiting")
+
+if not ans:
+    print("Not found, check the spelling...")
+
+for i in ans:
+
+    print(i)
