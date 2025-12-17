@@ -1,13 +1,6 @@
-from pymongo import MongoClient
-from elasticsearch import Elasticsearch
+from Configs import db, course, notes, es
 
 
-mongo= MongoClient("mongodb://localhost:27017/")
-es= Elasticsearch("http://localhost:9200/")
-
-db= mongo["Notes_Search"]
-course= db["course"]
-notes= db["notes"]
 
 
 
@@ -42,7 +35,7 @@ def basic_search(query):
     
 
 
-
+#Call this when the user hits enter.
 def NGramSearch(query):
     res= es.search(
         index="course2",
@@ -105,7 +98,7 @@ def NGramSearch_Box(query):
         for j in temp:
             response.append(j["name"])
 
-        return response     #Returning the document deom the notes collection after searching.
+        return response     #THis returns the matching name field from the course collection.
     
     else:
         return []
